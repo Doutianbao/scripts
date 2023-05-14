@@ -1,8 +1,8 @@
 # 让我一个一个复制粘贴再编辑是不可能的，这辈子也不可能的 #
 
-*暂时只适配https://www.mdpi.com/ 
+*暂时只适配https://www.mdpi.com/* 
 
-*感谢new bing
+*感谢new bing*
 
 
 save_tables.py
