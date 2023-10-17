@@ -12,6 +12,7 @@ library(ggplot2)
 patient_data <- readxl::read_xlsx("path/to/file.xlsx")
 
 # Sort the data frame by the Tumor_Change column
+#EXCEL包含两列，分别是 Patient_ID 和 Tumor_Change
 patient_data <- patient_data[order(patient_data$Tumor_Change), ]
 
 # Create a new column called Color based on the Tumor_Change value
