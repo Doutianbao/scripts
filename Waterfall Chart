@@ -1,0 +1,32 @@
+# 安装并加载ggplot2包
+if(!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
+
+# Create a data frame with the patient data
+#patient_data <- data.frame(
+#  Patient_ID = paste("Patient", 1:12),
+#  Tumor_Change = c(-30, -20, -10, 0, 10, 20, 30, 40, 50, 60, -60, -99)
+#)
+
+# Read the Excel file into a data frame
+patient_data <- readxl::read_xlsx("path/to/file.xlsx")
+
+# Sort the data frame by the Tumor_Change column
+patient_data <- patient_data[order(patient_data$Tumor_Change), ]
+
+# Create a new column called Color based on the Tumor_Change value
+patient_data$Color <- ifelse(patient_data$Tumor_Change < -30, "#E69F00",
+                             ifelse(patient_data$Tumor_Change > 20, "#D55E00", "#0072B2"))
+
+# Create a bar chart with the sorted data
+ggplot(patient_data, aes(x = reorder(Patient_ID, Tumor_Change), y = Tumor_Change, fill = Color)) +
+  geom_bar(stat = "identity") +
+  geom_hline(yintercept = 20, linetype = "dashed", color = "#D55E00") +
+  geom_hline(yintercept = -30, linetype = "dashed", color = "#E69F00") +
+  geom_hline(yintercept = 0, linetype = "solid", color = "#0072B2") +
+  scale_fill_identity() +
+  labs(x = "Patient ID", y = "Tumor Volume Change (%)") +
+  theme_minimal() +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.border = element_blank(), axis.line.y = element_line(color = "#0072B2")) +
+  scale_y_continuous(limits = c(-100, 100), breaks = seq(-100, 100, by = 20))
